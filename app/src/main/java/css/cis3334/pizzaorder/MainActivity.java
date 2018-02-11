@@ -60,9 +60,29 @@ public class MainActivity extends AppCompatActivity implements updateViewInterfa
     public void onClickOrder(View view) {
         // ****** Students need to add code here to get information from the UI widgets...
 
-        // ****** Students need to modify the call to OrderPizza to order the type of pizza the user selects using the UI widgets
-        String orderDescription = pizzaOrderSystem.OrderPizza("Peperoni", "large", false  );
+        // Check for delivery
+        Boolean delivery = chkbxDelivery.isChecked();
+        pizzaOrderSystem.setDelivery(delivery);
 
+        // Check size of radio button selected
+        String size;
+        if(rbSmall.isChecked()){
+            size = "small";
+        }else if(rbMedium.isChecked()){
+            size = "medium";
+        }else{
+            size = "large";
+        }
+
+        // Check if cheese box is checked
+        Boolean extraCheese = chkbxCheese.isChecked();
+
+        // Check what topping in spinner is selected
+        String topping = spinnerToppings.getSelectedItem().toString();
+
+
+        // ****** Students need to modify the call to OrderPizza to order the type of pizza the user selects using the UI widgets
+        String orderDescription = pizzaOrderSystem.OrderPizza(topping, size, extraCheese  );
 
         //display a pop up message for a long period of time
         Toast.makeText(getApplicationContext(), "You have ordered a "+orderDescription , Toast.LENGTH_LONG).show();
@@ -70,6 +90,8 @@ public class MainActivity extends AppCompatActivity implements updateViewInterfa
         txtTotal.setText("Total Due: " + pizzaOrderSystem.getTotalBill().toString());
         // add this pizza to the textview the lists the pizzas
         txtPizzasOrdered.append(orderDescription+"\n");
+
+
 
     }
 }
